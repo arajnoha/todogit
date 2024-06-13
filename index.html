@@ -1,0 +1,76 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitLab Config</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+      body {
+          font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+        padding: 20px;
+        background: #ccc;
+      }
+      label {
+        display: block;
+        margin-bottom: 0
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        margin: 0 0 20px;
+        box-sizing: border-box;
+        font-family: "Lato", sans-serif;
+      font-weight: 700;
+      font-style: normal;
+      background: #222;
+      border: 1px solid #000;
+      color:#fff;
+      outline:0;
+      box-shadow: none;
+      border-radius: 4px;
+  
+      }
+      button {
+        margin-top: 0;
+        padding: 8px 16px;
+        cursor: pointer;
+        border: 0;
+        background: #222;
+        color:#fff;
+        border-radius: 4px;
+      }
+    </style>
+</head>
+<body>
+  <h1>Configure GitLab</h1>
+  <form id="config-form">
+    <label for="token">GitLab Personal Access Token:</label>
+    <input type="password" id="token" name="token"><br><br>
+    <label for="url">GitLab URL:</label>
+    <input type="text" id="url" name="url"><br><br>
+    <button type="button" id="save-btn">Save</button>
+  </form>
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    window.addEventListener('DOMContentLoaded', () => {
+      ipcRenderer.on('update-config', (event, config) => {
+        document.getElementById('token').value = config.token || '';
+        document.getElementById('url').value = config.url || '';
+      });
+
+      document.getElementById('save-btn').addEventListener('click', () => {
+        const token = document.getElementById('token').value;
+        const url = document.getElementById('url').value;
+        ipcRenderer.send('save-config', { token, url });
+      });
+    });
+  </script>
+</body>
+</html>
+
