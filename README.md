@@ -12,3 +12,13 @@ The macOS tray icon with number of active tasks (MRs) waiting for you on GitLab
 
 
 Credentials are stored in json within this application bundle and hence, unaccessable from the outside. The app itself doesn't perform any http requests other than to your specified server.
+
+### Development
+
+To get the app running locally without the build of the electron:  
+`npm install`  
+`npm start`  
+
+To compile it:  
+`npm install`  
+`npm run package`  
